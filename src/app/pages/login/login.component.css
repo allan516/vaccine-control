@@ -1,0 +1,99 @@
+.login-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.login-section {
+  margin-right: 200px;
+}
+
+.login-section > h1 {
+  font-size: 1.5rem;
+  font-weight: bolder;
+  padding: 10px 0px;
+}
+
+.login-section > p {
+  margin: 50px 0px;
+}
+
+.login-google-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 10px;
+  width: 300px;
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.login-google-btn p {
+  font-weight: bolder;
+}
+
+.section-divider {
+  display: flex;
+  margin-top: 40px;
+}
+
+.section-divider hr {
+  width: 60px;
+  border: 1px solid lightgray !important;
+}
+
+.section-divider p {
+  color: rgb(194, 194, 194);
+  font-style: italic;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.login-input {
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  height: 35px;
+  margin: 10px;
+  padding-left: 20px;
+}
+
+.login-checkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+
+.login-checkbox a {
+  text-decoration: none;
+}
+
+.login-btn-checkbox {
+  margin-right: 10px;
+}
+
+.login-btn-entrar {
+  background-color: #2d4357;
+  color: #e4e3d6;
+  border-radius: 20px;
+  border: none;
+  height: 35px;
+  width: 250px;
+  margin: 20px auto;
+}
+
+.section-img {
+  /* border-radius: 5px 30px 5px 5px; */
+  height: 100vh;
+}
