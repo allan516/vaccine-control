@@ -62,6 +62,7 @@
 
 .login-input {
   border: 1px solid lightgray;
+  outline: none;
   border-radius: 20px;
   height: 35px;
   margin: 10px;
@@ -91,6 +92,11 @@
   height: 35px;
   width: 250px;
   margin: 20px auto;
+}
+
+.login-btn-entrar:hover {
+  background-color: #4b7092;
+  transform: translate(1px, -1px);
 }
 
 .section-img {
