@@ -13,7 +13,13 @@
       <hr />
     </span>
 
-    <form class="login-form" action="" method="post" autocomplete="on">
+    <form
+      class="login-form"
+      action=""
+      method="post"
+      autocomplete="on"
+      [formGroup]="formulario"
+    >
       <label for="iuser">Usuário*</label>
       <input
         class="login-input"
@@ -21,6 +27,7 @@
         name=""
         id="iuser"
         placeholder="Seu usuário"
+        formControlName="name"
       />
 
       <label for="ipassword">Senha*</label>
@@ -30,6 +37,7 @@
         name=""
         id="ipassword"
         placeholder="Sua senha aqui"
+        formControlName="password"
       />
 
       <span class="login-checkbox">
@@ -45,7 +53,7 @@
         <a href="#">Esqueceu a senha?</a>
       </span>
 
-      <input class="login-btn-entrar" type="submit" value="Entrar" />
+      <button class="login-btn-entrar" (click)="login()">Entrar</button>
 
       <span
         ><p>Ainda não é registrado? <a href="#">Criar uma conta</a></p></span
