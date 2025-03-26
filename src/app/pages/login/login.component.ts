@@ -18,7 +18,7 @@ export class LoginComponent {
   //private loginService = inject(LoginService);
 
   login() {
-    console.log(this.formulario.value);
+    console.log(this.formulario.value.name);
     this.formulario.reset();
   }
 }
