@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -17,8 +18,16 @@ export class LoginComponent {
 
   //private loginService = inject(LoginService);
 
+  constructor(private loginService: LoginService) {}
+
   login() {
-    console.log(this.formulario.value.name);
+    const response = this.loginService.loginAuth(this.formulario).subscribe({
+      next: (data) => console.log('Token: ' + data),
+      error: () => {
+        console.log('erro');
+      },
+    });
     this.formulario.reset();
+    return response;
   }
 }
