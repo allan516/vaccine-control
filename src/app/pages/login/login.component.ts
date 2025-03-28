@@ -16,13 +16,16 @@ export class LoginComponent {
     password: new FormControl(''),
   });
 
-  //private loginService = inject(LoginService);
+  private loginService = inject(LoginService);
 
-  constructor(private loginService: LoginService) {}
+  //constructor(private loginService: LoginService) {}
 
   login() {
     const response = this.loginService.loginAuth(this.formulario).subscribe({
-      next: (data) => console.log('Token: ' + data),
+      next: (data) => {
+        const res = JSON.parse(JSON.stringify(data));
+        return window.localStorage.setItem('token', res);
+      },
       error: () => {
         console.log('erro');
       },
