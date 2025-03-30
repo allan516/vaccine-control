@@ -3,7 +3,6 @@ import { LoginService } from '../../services/login.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { authGuard } from '../../guards/auth.guard';
 
 @Component({
   selector: 'app-login',

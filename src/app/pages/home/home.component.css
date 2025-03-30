@@ -1,2 +1,8 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+
+main {
+  width: 80vw;
+  height: 80vh;
+  margin: 150px auto;
+}
