@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Router } from '@angular/router';
+import { MenuItem, MenuItemCommandEvent } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 
 @Component({
@@ -10,6 +11,8 @@ import { MenubarModule } from 'primeng/menubar';
 })
 export class MenuComponent implements OnInit {
   items: MenuItem[] | undefined;
+
+  constructor(private route: Router) {}
 
   ngOnInit() {
     this.items = [
@@ -56,7 +59,14 @@ export class MenuComponent implements OnInit {
       {
         label: 'Sair',
         icon: 'pi pi-sign-out',
+        command: () => this.logOut(),
       },
     ];
+  }
+
+  logOut(): ((event: MenuItemCommandEvent) => void) | undefined {
+    localStorage.clear();
+    this.route.navigate(['/']);
+    return;
   }
 }

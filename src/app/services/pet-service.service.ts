@@ -1,32 +1,40 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PetServiceService {
-  constructor() {}
+  baseUrl = 'http://localhost:3000/pet';
+
+  constructor(private http: HttpClient) {}
+
+  getAllPet(token: HttpHeaders): Observable<any> {
+    return this.http.get(this.baseUrl, { headers: token });
+  }
 
   getPetData() {
     return [
       {
         data: {
           name: 'Other',
-          size: '5mb',
-          type: 'Folder',
+          age: '5mb',
+          vaccines: 'Folder',
         },
       },
       {
         data: {
           name: 'Pictures',
-          size: '150kb',
-          type: 'Folder',
+          age: '150kb',
+          vaccines: 'Folder',
         },
       },
       {
         data: {
           name: 'Videos',
-          size: '1500mb',
-          type: 'Folder',
+          age: '1500mb',
+          vaccines: 'Folder',
         },
       },
     ];
