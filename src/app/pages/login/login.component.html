@@ -18,7 +18,7 @@
       action=""
       method="post"
       autocomplete="on"
-      [formGroup]="formulario"
+      [formGroup]="form"
     >
       <label for="iuser">Usuário*</label>
       <input
@@ -54,11 +54,11 @@
       </span>
 
       <button class="login-btn-entrar" (click)="login()">Entrar</button>
-
       <span
         ><p>Ainda não é registrado? <a href="#">Criar uma conta</a></p></span
       >
     </form>
+    <app-message *ngIf="message"></app-message>
   </section>
   <section>
     <img

@@ -9,6 +9,7 @@ export const authGuard: CanActivateFn = () => {
   try {
     if (!token) {
       route.navigate(['/']);
+
       return false;
     }
     const decodedToken = jwtDecode(token).exp as number;
