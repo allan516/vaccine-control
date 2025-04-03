@@ -1,13 +1,15 @@
 <app-menu></app-menu>
 
-<!-- get-pet
-     git-pet-by-id
+<!-- 🆗get-pet
+     get-pet-by-id
      post-pet
      delete-pet
      update-pet
      post-vaccine
      update-vaccine
-     delete-vaccine-->
+     delete-vaccine
+     get-vaccine
+  -->
 <main>
   <p-treeTable
     [value]="files"
@@ -40,6 +42,7 @@
               icon="pi pi-search"
               rounded="true"
               [style]="{ 'margin-right': '.5em' }"
+              (onClick)="getPetDetails()"
             />
           </ng-container>
         </td>

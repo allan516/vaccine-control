@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { PetServiceService } from '../../services/pet-service.service';
 import { MenuComponent } from '../../shared/menu/menu.component';
 import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface Column {
   field: string;
@@ -24,7 +25,10 @@ export class HomeComponent implements OnInit {
   files: TreeNode[] = [];
   cols: Column[] = [];
 
-  constructor(private petServiceService: PetServiceService) {}
+  constructor(
+    private petServiceService: PetServiceService,
+    private route: Router
+  ) {}
 
   getPets() {
     const token = localStorage.getItem('token');
@@ -47,6 +51,10 @@ export class HomeComponent implements OnInit {
         console.log('erro');
       },
     });
+  }
+
+  getPetDetails() {
+    return this.route.navigate(['/detail']);
   }
 
   ngOnInit() {

@@ -8,31 +8,14 @@ import { MessagesModule } from 'primeng/messages';
   standalone: true,
   imports: [MessagesModule],
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent {
   @Input()
   messages!: Message[];
 
-  // success() {
-  //   this.messages = [{ severity: 'success', detail: 'Sucesso!' }];
-  // }
-
-  // error() {
-  //   this.messages = [
-  //     { severity: 'error', detail: 'Usuário ou senha incorreto!' },
-  //   ];
-  // }
-
-  // warn() {
-  //   this.messages = [{ severity: 'warn', detail: 'Warning Message' }];
-  // }
-
-  // Info() {
-  //   this.messages = [{ severity: 'info', detail: 'Info Message' }];
-  // }
-
-  ngOnInit(): void {
-    this.takeMessage(this.messages);
-  }
-
-  takeMessage(msg: Message[]) {}
+  /*
+  [{ severity: 'info', detail: 'Info Message' }];
+  [{ severity: 'success', detail: 'Sucesso!' }];
+  [{ severity: 'warn', detail: 'Warning Message' }];
+  [{ severity: 'error', detail: 'Usuário ou senha incorreto!' }];
+*/
 }

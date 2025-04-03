@@ -14,33 +14,7 @@ export class PetServiceService {
     return this.http.get(this.baseUrl, { headers: token });
   }
 
-  getPetData() {
-    return [
-      {
-        data: {
-          name: 'Other',
-          age: '5mb',
-          vaccines: 'Folder',
-        },
-      },
-      {
-        data: {
-          name: 'Pictures',
-          age: '150kb',
-          vaccines: 'Folder',
-        },
-      },
-      {
-        data: {
-          name: 'Videos',
-          age: '1500mb',
-          vaccines: 'Folder',
-        },
-      },
-    ];
-  }
-
-  getPet() {
-    return Promise.resolve(this.getPetData());
+  getPetById(token: HttpHeaders, id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`, { headers: token });
   }
 }

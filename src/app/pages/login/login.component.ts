@@ -42,7 +42,7 @@ export class LoginComponent {
       },
       error: () => {
         this.messages = [
-          { severity: 'error', detail: 'Usuário ou senha incorreto!' },
+          { severity: 'error', detail: 'Usuário ou senha incorretos!' },
         ];
         this.msgVisibility = true;
       },
