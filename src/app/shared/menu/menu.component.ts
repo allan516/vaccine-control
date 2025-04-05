@@ -19,6 +19,7 @@ export class MenuComponent implements OnInit {
       {
         label: 'Home',
         icon: 'pi pi-home',
+        command: () => this.goToHome(),
       },
       {
         label: 'Adicionar pet',
@@ -68,5 +69,9 @@ export class MenuComponent implements OnInit {
     localStorage.clear();
     this.route.navigate(['/']);
     return;
+  }
+
+  goToHome() {
+    this.route.navigate(['/home']);
   }
 }

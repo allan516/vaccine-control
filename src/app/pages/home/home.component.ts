@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TreeNode } from 'primeng/api';
+import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TreeTableModule } from 'primeng/treetable';
 import { CommonModule } from '@angular/common';
-import { PetServiceService } from '../../services/pet-service.service';
+import { PetService } from '../../services/pet.service';
 import { MenuComponent } from '../../shared/menu/menu.component';
 import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { PetDetailsComponent } from '../pet-details/pet-details.component';
 
 interface Column {
   field: string;
@@ -19,26 +20,35 @@ interface Column {
   styleUrl: './home.component.css',
   standalone: true,
   imports: [MenuComponent, TreeTableModule, ButtonModule, CommonModule],
-  providers: [PetServiceService],
+  providers: [
+    PetService,
+    PetDetailsComponent,
+    MessageService,
+    ConfirmationService,
+  ],
 })
 export class HomeComponent implements OnInit {
   files: TreeNode[] = [];
   cols: Column[] = [];
+  id: string = '';
 
   constructor(
-    private petServiceService: PetServiceService,
-    private route: Router
+    private petService: PetService,
+    private route: Router,
+    private petDetails: PetDetailsComponent
   ) {}
 
   getPets() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.petServiceService.getAllPet(headers).subscribe({
+    this.petService.getAllPet(headers).subscribe({
       next: (data) => {
         this.files = data.map((item: any) => {
+          this.id = item._id;
           return {
             data: {
+              _id: item._id,
               name: item.name,
               age: item.age,
               vaccines: item.vaccines.length,
@@ -53,7 +63,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getPetDetails() {
+  getPetDetailsComponent(id: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.petDetails.getPetDetails(headers, id);
     return this.route.navigate(['/detail']);
   }
 

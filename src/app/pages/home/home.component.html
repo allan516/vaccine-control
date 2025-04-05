@@ -41,8 +41,18 @@
             <p-button
               icon="pi pi-search"
               rounded="true"
-              [style]="{ 'margin-right': '.5em' }"
-              (onClick)="getPetDetails()"
+              [style]="{
+                'margin-right': '.5em',
+                background: 'white',
+                color: 'black'
+              }"
+              (onClick)="getPetDetailsComponent(rowData._id)"
+            />
+
+            <p-button
+              icon="pi pi-trash"
+              rounded="true"
+              [style]="{ background: 'white', color: 'black' }"
             />
           </ng-container>
         </td>
