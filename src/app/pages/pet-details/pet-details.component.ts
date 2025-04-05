@@ -5,10 +5,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { TreeNode } from 'primeng/api';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
-//import { Component, OnInit } from '@angular/core';
-//import { ConfirmationService, MessageService } from 'primeng/api';
-//import { Product } from '@domain/product';
-//import { ProductService } from '@service/productservice';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
@@ -26,6 +22,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { Vaccine } from '../../models/vaccine';
 
 export interface Product {
   id?: string;
@@ -186,23 +183,29 @@ export class PetDetailsComponent {
   getPetDetails(headers: HttpHeaders, id: string) {
     this.petService.getPetById(headers, id).subscribe({
       next: (data) => {
-        console.log(data);
-        this.files = data.map((item: any) => {
-          console.log(item);
-          return {
-            data: {
-              _id: item._id,
-              name: item.name,
-              age: item.age,
-              vaccines: item.vaccines,
-            },
-            children: [],
-          };
-        });
+        console.log(data._id);
+        console.log(data.name);
+        console.log(data.age);
+        console.log(this.getVaccine(data.vaccines));
+        return {
+          data: {
+            _id: data._id,
+            name: data.name,
+            age: data.age,
+            vaccines: data.vaccines,
+          },
+          children: [],
+        };
       },
       error: () => {
         console.log('erro');
       },
+    });
+  }
+
+  getVaccine(vaccine: Vaccine[]) {
+    vaccine.forEach((element) => {
+      console.log(element);
     });
   }
 }
