@@ -7,5 +7,5 @@ import { PetDetailsComponent } from './pages/pet-details/pet-details.component';
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
-  { path: 'detail', component: PetDetailsComponent, canActivate: [authGuard] },
+  { path: 'pet/:id', component: PetDetailsComponent, canActivate: [authGuard] },
 ];

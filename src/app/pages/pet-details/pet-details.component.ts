@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../shared/menu/menu.component';
 import { PetService } from '../../services/pet.service';
 import { HttpHeaders } from '@angular/common/http';
@@ -23,19 +23,8 @@ import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { Vaccine } from '../../models/vaccine';
-
-export interface Product {
-  id?: string;
-  code?: string;
-  name?: string;
-  description?: string;
-  price?: number;
-  quantity?: number;
-  inventoryStatus?: string;
-  category?: string;
-  image?: string;
-  rating?: number;
-}
+import { Pet } from '../../models/pet';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pet-details',
@@ -63,17 +52,18 @@ export interface Product {
   ],
   providers: [MessageService, ConfirmationService, PetService],
   templateUrl: './pet-details.component.html',
+  styleUrl: './pet-details.component.css',
 })
-export class PetDetailsComponent {
+export class PetDetailsComponent implements OnInit {
   files: TreeNode[] = [];
 
-  productDialog: boolean = false;
+  petDialog: boolean = false;
 
-  products!: Product[];
+  pets!: Pet[];
 
-  product!: Product;
+  pet!: Pet;
 
-  selectedProducts!: Product[] | null;
+  selectedPets!: Pet[] | null;
 
   submitted: boolean = false;
 
@@ -82,13 +72,14 @@ export class PetDetailsComponent {
   constructor(
     private petService: PetService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private route: ActivatedRoute
   ) {}
 
   openNew() {
-    this.product = {};
+    this.pet = {};
     this.submitted = false;
-    this.productDialog = true;
+    this.petDialog = true;
   }
 
   deleteSelectedProducts() {
@@ -97,10 +88,10 @@ export class PetDetailsComponent {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter(
-          (val) => !this.selectedProducts?.includes(val)
+        this.pets = this.pets.filter(
+          (val) => !this.selectedPets?.includes(val)
         );
-        this.selectedProducts = null;
+        this.selectedPets = null;
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -111,19 +102,19 @@ export class PetDetailsComponent {
     });
   }
 
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.productDialog = true;
+  editProduct(product: Pet) {
+    this.pet = { ...product };
+    this.petDialog = true;
   }
 
-  deleteProduct(product: Product) {
+  deleteProduct(product: Pet) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + product.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.products = this.products.filter((val) => val.id !== product.id);
-        this.product = {};
+        this.pets = this.pets.filter((val) => val.id !== product.id);
+        this.pet = {};
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -135,16 +126,16 @@ export class PetDetailsComponent {
   }
 
   hideDialog() {
-    this.productDialog = false;
+    this.petDialog = false;
     this.submitted = false;
   }
 
   saveProduct() {
     this.submitted = true;
 
-    if (this.product.name?.trim()) {
-      if (this.product.id) {
-        this.products[this.findIndexById(this.product.id)] = this.product;
+    if (this.pet.name?.trim()) {
+      if (this.pet.id) {
+        this.pets[this.findIndexById(this.pet.id)] = this.pet;
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -152,8 +143,8 @@ export class PetDetailsComponent {
           life: 3000,
         });
       } else {
-        this.product.image = 'product-placeholder.svg';
-        this.products.push(this.product);
+        this.pet.image = 'product-placeholder.svg';
+        this.pets.push(this.pet);
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
@@ -162,16 +153,16 @@ export class PetDetailsComponent {
         });
       }
 
-      this.products = [...this.products];
-      this.productDialog = false;
-      this.product = {};
+      this.pets = [...this.pets];
+      this.petDialog = false;
+      this.pet = {};
     }
   }
 
   findIndexById(id: string): number {
     let index = -1;
-    for (let i = 0; i < this.products.length; i++) {
-      if (this.products[i].id === id) {
+    for (let i = 0; i < this.pets.length; i++) {
+      if (this.pets[i].id === id) {
         index = i;
         break;
       }
@@ -180,22 +171,18 @@ export class PetDetailsComponent {
     return index;
   }
 
-  getPetDetails(headers: HttpHeaders, id: string) {
-    this.petService.getPetById(headers, id).subscribe({
+  getPetDetails(header: HttpHeaders, id: string) {
+    this.petService.getPetById(header, id).subscribe({
       next: (data) => {
-        console.log(data._id);
-        console.log(data.name);
-        console.log(data.age);
-        console.log(this.getVaccine(data.vaccines));
-        return {
-          data: {
-            _id: data._id,
+        console.log(data.vaccines);
+        return (this.pets = [
+          {
+            id: data._id,
             name: data.name,
             age: data.age,
             vaccines: data.vaccines,
           },
-          children: [],
-        };
+        ]);
       },
       error: () => {
         console.log('erro');
@@ -203,9 +190,20 @@ export class PetDetailsComponent {
     });
   }
 
-  getVaccine(vaccine: Vaccine[]) {
+  getVaccine(vaccine: Vaccine[]): Vaccine[] {
+    let vaccines: Vaccine[] = [];
     vaccine.forEach((element) => {
-      console.log(element);
+      console.log(element.name);
+      console.log(element.date);
+      vaccines = [{ name: element.name, date: element.date }];
     });
+    return vaccines;
+  }
+
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const id = this.route.snapshot.paramMap.get('id') as string;
+    this.getPetDetails(headers, id);
   }
 }

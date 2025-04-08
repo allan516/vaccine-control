@@ -64,10 +64,7 @@ export class HomeComponent implements OnInit {
   }
 
   getPetDetailsComponent(id: string) {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.petDetails.getPetDetails(headers, id);
-    return this.route.navigate(['/detail']);
+    return this.route.navigate(['/pet', id]);
   }
 
   ngOnInit() {
