@@ -24,7 +24,7 @@ import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { Vaccine } from '../../models/vaccine';
 import { Pet } from '../../models/pet';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-pet-details',
@@ -147,8 +147,8 @@ export class PetDetailsComponent implements OnInit {
         date: this.currentVaccine.date || new Date(),
       })
       .subscribe({
-        next: (data) => {
-          return data;
+        next: () => {
+          return this.getPetDetails(headers, id);
         },
         error: (error) => {
           console.log('erro: ' + error);

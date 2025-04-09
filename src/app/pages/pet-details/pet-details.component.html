@@ -38,13 +38,11 @@
         <tr>
           <td>
             <img
-              [src]="
-                'https://primefaces.org/cdn/primeng/images/demo/product/' +
-                product.image
-              "
+              [src]="'../../assets/images/defaultPet.png'"
               [alt]="product.name"
               width="50"
               class="shadow-4"
+              [style]="{ 'border-radius': '50%' }"
             />
           </td>
           <td>{{ product.name }}</td>
@@ -86,7 +84,7 @@
           <td>
             {{ vaccine.name }}
             <strong>-</strong>
-            {{ vaccine.date }}
+            {{ vaccine.date | date : "dd / MM / yyyy" }}
           </td>
 
           <td>
