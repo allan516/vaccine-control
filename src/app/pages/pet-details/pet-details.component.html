@@ -29,9 +29,7 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Image</th>
-          <th pSortableColumn="name" style="min-width: 15rem">
-            Pet <p-sortIcon field="name" />
-          </th>
+          <th pSortableColumn="name" style="min-width: 15rem">Pet</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-product>
@@ -72,7 +70,7 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="category" style="min-width: 10rem" [colSpan]="3">
-            Vacinas <p-sortIcon field="category" />
+            Vacinas
           </th>
         </tr>
       </ng-template>
@@ -84,7 +82,7 @@
           <td>
             {{ vaccine.name }}
             <strong>-</strong>
-            {{ vaccine.date | date : "dd / MM / yyyy" }}
+            {{ vaccine.date | date : "dd-MM-yyyy" }}
           </td>
 
           <td>
@@ -103,7 +101,7 @@
               severity="danger"
               [rounded]="true"
               [outlined]="true"
-              (onClick)="deleteProduct(pet)"
+              (onClick)="deleteVaccine(vaccine.name)"
             />
           </td>
         </tr>

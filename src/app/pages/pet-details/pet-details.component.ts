@@ -114,18 +114,31 @@ export class PetDetailsComponent implements OnInit {
     this.petDialog = true;
   }
 
-  deleteProduct(product: Pet) {
+  deleteVaccine(vaccine: Vaccine) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
+      message: 'Deseja realmente apagar a vacina: ' + vaccine + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.pets = this.pets.filter((val) => val.id !== product.id);
-        this.pet = {};
+        const token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set(
+          'Authorization',
+          `Bearer ${token}`
+        );
+        const id = this.route.snapshot.paramMap.get('id') as string;
+        this.petService;
+        this.petService.deleteVaccine(headers, id, vaccine).subscribe({
+          next: () => {
+            this.getPetDetails(headers, id);
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
-          detail: 'Product Deleted',
+          detail: 'Vacina apagada!',
           life: 3000,
         });
       },
@@ -163,7 +176,7 @@ export class PetDetailsComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
-          detail: 'Product Updated',
+          detail: 'Vacina atualizada!',
           life: 3000,
         });
       } else {

@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Vaccine } from '../models/vaccine';
-import { Form, FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +32,15 @@ export class PetService {
         headers: token,
       }
     );
+  }
+
+  deleteVaccine(
+    token: HttpHeaders,
+    id: string,
+    vaccine: Vaccine
+  ): Observable<Object> {
+    return this.http.delete(`${this.baseUrl}/${id}/vaccine/${vaccine}`, {
+      headers: token,
+    });
   }
 }
