@@ -63,6 +63,9 @@ export class PetDetailsComponent implements OnInit {
 
   pet!: Pet;
 
+  vaccine!: Vaccine;
+  currentVaccine: Vaccine = { name: '', date: new Date() };
+
   selectedPets!: Pet[] | null;
 
   submitted: boolean = false;
@@ -75,6 +78,10 @@ export class PetDetailsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private route: ActivatedRoute
   ) {}
+
+  getVaccine(vaccine: Vaccine) {
+    return (this.vaccine = vaccine);
+  }
 
   openNew() {
     this.pet = {};
@@ -135,10 +142,13 @@ export class PetDetailsComponent implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.petService
-      .updateVaccine(headers, id, 'Cinom', { name: 'lafja', date: new Date() })
+      .updateVaccine(headers, id, this.vaccine, {
+        name: this.currentVaccine.name,
+        date: this.currentVaccine.date || new Date(),
+      })
       .subscribe({
         next: (data) => {
-          console.log(data);
+          return data;
         },
         error: (error) => {
           console.log('erro: ' + error);
@@ -202,14 +212,6 @@ export class PetDetailsComponent implements OnInit {
       },
     });
   }
-
-  // getVaccine(vaccine: Vaccine[]): Vaccine[] {
-  //   let vaccines: Vaccine[] = [];
-  //   vaccine.forEach((element) => {
-  //     vaccines = [{ name: element.name, date: element.date }];
-  //   });
-  //   return vaccines;
-  // }
 
   ngOnInit() {
     const token = localStorage.getItem('token');

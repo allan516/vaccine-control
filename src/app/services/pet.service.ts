@@ -23,7 +23,7 @@ export class PetService {
   updateVaccine(
     token: HttpHeaders,
     id: string,
-    vaccine: string,
+    vaccine: Vaccine,
     currentVaccine: Vaccine
   ): Observable<Object> {
     return this.http.patch(

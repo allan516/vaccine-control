@@ -78,9 +78,9 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product>
+      <ng-template pTemplate="body" let-pet>
         <tr
-          *ngFor="let vaccine of product.vaccines"
+          *ngFor="let vaccine of pet.vaccines"
           [style]="{ padding: '10px 0px' }"
         >
           <td>
@@ -97,14 +97,15 @@
               [rounded]="true"
               [outlined]="true"
               severity="success"
-              (onClick)="editProduct(product)"
+              (onClick)="editProduct(pet)"
+              (onClick)="getVaccine(vaccine.name)"
             />
             <p-button
               icon="pi pi-trash"
               severity="danger"
               [rounded]="true"
               [outlined]="true"
-              (onClick)="deleteProduct(product)"
+              (onClick)="deleteProduct(pet)"
             />
           </td>
         </tr>
@@ -141,6 +142,7 @@
             required
             autofocus
             placeholder="Nome da Vacina"
+            [(ngModel)]="currentVaccine.name"
           />
           <small class="p-error" *ngIf="submitted && !pet.name">
             Name is required.
@@ -153,7 +155,7 @@
             type="date"
             id="description"
             pInputTextarea
-            [(ngModel)]="pet.name"
+            [(ngModel)]="currentVaccine.date"
             required
           />
         </div>
