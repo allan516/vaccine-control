@@ -32,11 +32,7 @@ export class HomeComponent implements OnInit {
   cols: Column[] = [];
   id: string = '';
 
-  constructor(
-    private petService: PetService,
-    private route: Router,
-    private petDetails: PetDetailsComponent
-  ) {}
+  constructor(private petService: PetService, private route: Router) {}
 
   getPets() {
     const token = localStorage.getItem('token');

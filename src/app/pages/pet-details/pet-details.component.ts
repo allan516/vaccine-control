@@ -20,7 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { Vaccine } from '../../models/vaccine';
 import { Pet } from '../../models/pet';
@@ -130,7 +130,21 @@ export class PetDetailsComponent implements OnInit {
     this.submitted = false;
   }
 
-  saveProduct() {
+  updateVaccine() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const id = this.route.snapshot.paramMap.get('id') as string;
+    this.petService
+      .updateVaccine(headers, id, 'Cinom', { name: 'lafja', date: new Date() })
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (error) => {
+          console.log('erro: ' + error);
+        },
+      });
+
     this.submitted = true;
 
     if (this.pet.name?.trim()) {
@@ -174,7 +188,6 @@ export class PetDetailsComponent implements OnInit {
   getPetDetails(header: HttpHeaders, id: string) {
     this.petService.getPetById(header, id).subscribe({
       next: (data) => {
-        console.log(data.vaccines);
         return (this.pets = [
           {
             id: data._id,
@@ -190,15 +203,13 @@ export class PetDetailsComponent implements OnInit {
     });
   }
 
-  getVaccine(vaccine: Vaccine[]): Vaccine[] {
-    let vaccines: Vaccine[] = [];
-    vaccine.forEach((element) => {
-      console.log(element.name);
-      console.log(element.date);
-      vaccines = [{ name: element.name, date: element.date }];
-    });
-    return vaccines;
-  }
+  // getVaccine(vaccine: Vaccine[]): Vaccine[] {
+  //   let vaccines: Vaccine[] = [];
+  //   vaccine.forEach((element) => {
+  //     vaccines = [{ name: element.name, date: element.date }];
+  //   });
+  //   return vaccines;
+  // }
 
   ngOnInit() {
     const token = localStorage.getItem('token');
