@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem, MenuItemCommandEvent } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 
 import { PetService } from '../../services/pet.service';
+import { HttpHeaders } from '@angular/common/http';
+import { Vaccine } from '../../models/vaccine';
 
 @Component({
   selector: 'app-menu',
@@ -16,8 +18,13 @@ export class MenuComponent implements OnInit {
 
   @Input()
   add: string = '';
+  newVaccine: Vaccine = { name: 'vacinne', date: '' };
 
-  constructor(private route: Router, private petService: PetService) {}
+  constructor(
+    private route: Router,
+    private routerParam: ActivatedRoute,
+    private petService: PetService
+  ) {}
 
   ngOnInit() {
     this.items = [
@@ -29,7 +36,8 @@ export class MenuComponent implements OnInit {
       {
         label: this.add,
         icon: 'pi pi-plus-circle',
-        command: () => this.addItem(),
+        command: () =>
+          this.add === 'Adicionar Pet' ? this.addPet() : this.addVaccine(),
       },
       {
         label: 'Pesquisar',
@@ -81,13 +89,26 @@ export class MenuComponent implements OnInit {
     this.route.navigate(['/home']);
   }
 
-  addItem() {
+  addPet() {
     if (this.add === 'Adicionar Pet') {
-      return this.petService.addNewPet();
+      return this.petService.addNewPetService();
     }
+  }
 
-    if (this.add === 'Adicionar Vacina') {
-      return this.petService.addNewVaccineService();
-    }
+  addVaccine() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const id = this.routerParam.snapshot.paramMap.get('id') as string;
+
+    return this.petService
+      .addNewVaccineService(headers, id, this.newVaccine)
+      .subscribe({
+        next: () => {
+          return this.route.navigate([`/pet/${id}`]);
+        },
+        error: (error) => {
+          console.log(error, +' error');
+        },
+      });
   }
 }

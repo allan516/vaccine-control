@@ -44,10 +44,20 @@ export class PetService {
     });
   }
 
-  addNewVaccineService() {
-    console.log('nova vacina criada');
+  addNewVaccineService(
+    token: HttpHeaders,
+    id: string,
+    vaccine: Vaccine
+  ): Observable<Object> {
+    return this.http.post(
+      `${this.baseUrl}/${id}/vaccine`,
+      { name: vaccine.name, date: vaccine.date },
+      {
+        headers: token,
+      }
+    );
   }
-  addNewPet() {
+  addNewPetService() {
     console.log('novo pet adicionado');
   }
 }
