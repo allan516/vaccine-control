@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, MenuItemCommandEvent } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
+import { HomeComponent } from '../../pages/home/home.component';
+import { PetDetailsComponent } from '../../pages/pet-details/pet-details.component';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +14,14 @@ import { MenubarModule } from 'primeng/menubar';
 export class MenuComponent implements OnInit {
   items: MenuItem[] | undefined;
 
-  constructor(private route: Router) {}
+  @Input()
+  add: string = '';
+
+  constructor(
+    private route: Router,
+    private homeComponent: HomeComponent,
+    private petDetailComponent: PetDetailsComponent
+  ) {}
 
   ngOnInit() {
     this.items = [
@@ -22,8 +31,9 @@ export class MenuComponent implements OnInit {
         command: () => this.goToHome(),
       },
       {
-        label: 'Adicionar pet',
+        label: this.add,
         icon: 'pi pi-plus-circle',
+        command: () => this.addItem(),
       },
       {
         label: 'Pesquisar',
@@ -73,5 +83,15 @@ export class MenuComponent implements OnInit {
 
   goToHome() {
     this.route.navigate(['/home']);
+  }
+
+  addItem() {
+    if (this.add === 'Adicionar Pet') {
+      return this.homeComponent.addNewPet();
+    }
+
+    if (this.add === 'Adicionar Vacina') {
+      return this.petDetailComponent.addNewVaccine();
+    }
   }
 }

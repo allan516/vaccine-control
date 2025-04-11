@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   files: TreeNode[] = [];
   cols: Column[] = [];
   id: string = '';
+  addPet: string = 'Adicionar Pet';
 
   constructor(private petService: PetService, private route: Router) {}
 
@@ -57,6 +58,10 @@ export class HomeComponent implements OnInit {
         console.log('erro');
       },
     });
+  }
+
+  addNewPet() {
+    console.log('Novo Pet adicionado.');
   }
 
   getPetDetailsComponent(id: string) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuComponent } from '../../shared/menu/menu.component';
 import { PetService } from '../../services/pet.service';
 import { HttpHeaders } from '@angular/common/http';
@@ -66,6 +66,8 @@ export class PetDetailsComponent implements OnInit {
   vaccine!: Vaccine;
   currentVaccine: Vaccine = { name: '', date: new Date() };
 
+  addVaccine: string = 'Adicionar Vacina';
+
   selectedPets!: Pet[] | null;
 
   submitted: boolean = false;
@@ -112,6 +114,10 @@ export class PetDetailsComponent implements OnInit {
   editProduct(product: Pet) {
     this.pet = { ...product };
     this.petDialog = true;
+  }
+
+  addNewVaccine() {
+    console.log('adicionar nova vacina');
   }
 
   deleteVaccine(vaccine: Vaccine) {
