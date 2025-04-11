@@ -25,6 +25,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { Vaccine } from '../../models/vaccine';
 import { Pet } from '../../models/pet';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HomeComponent } from '../home/home.component';
 
 @Component({
   selector: 'app-pet-details',

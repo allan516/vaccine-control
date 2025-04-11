@@ -43,4 +43,11 @@ export class PetService {
       headers: token,
     });
   }
+
+  addNewVaccineService() {
+    console.log('nova vacina criada');
+  }
+  addNewPet() {
+    console.log('novo pet adicionado');
+  }
 }

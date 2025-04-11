@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, MenuItemCommandEvent } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
-import { HomeComponent } from '../../pages/home/home.component';
-import { PetDetailsComponent } from '../../pages/pet-details/pet-details.component';
+
+import { PetService } from '../../services/pet.service';
 
 @Component({
   selector: 'app-menu',
@@ -17,11 +17,7 @@ export class MenuComponent implements OnInit {
   @Input()
   add: string = '';
 
-  constructor(
-    private route: Router,
-    private homeComponent: HomeComponent,
-    private petDetailComponent: PetDetailsComponent
-  ) {}
+  constructor(private route: Router, private petService: PetService) {}
 
   ngOnInit() {
     this.items = [
@@ -87,11 +83,11 @@ export class MenuComponent implements OnInit {
 
   addItem() {
     if (this.add === 'Adicionar Pet') {
-      return this.homeComponent.addNewPet();
+      return this.petService.addNewPet();
     }
 
     if (this.add === 'Adicionar Vacina') {
-      return this.petDetailComponent.addNewVaccine();
+      return this.petService.addNewVaccineService();
     }
   }
 }
