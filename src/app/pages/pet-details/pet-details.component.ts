@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../shared/menu/menu.component';
 import { PetService } from '../../services/pet.service';
 import { HttpHeaders } from '@angular/common/http';
@@ -20,12 +20,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
-import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { Vaccine } from '../../models/vaccine';
 import { Pet } from '../../models/pet';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pet-details',
@@ -67,7 +66,7 @@ export class PetDetailsComponent implements OnInit {
   vaccine!: Vaccine;
   currentVaccine: Vaccine = { name: '', date: new Date() };
 
-  addVaccine: string = 'Adicionar Vacina';
+  newVaccine: Vaccine = { name: 'vacinne', date: '' };
 
   selectedPets!: Pet[] | null;
 
@@ -118,7 +117,20 @@ export class PetDetailsComponent implements OnInit {
   }
 
   addNewVaccine() {
-    console.log('adicionar nova vacina');
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const id = this.route.snapshot.paramMap.get('id') as string;
+
+    this.petService
+      .addNewVaccineService(headers, id, this.newVaccine)
+      .subscribe({
+        next: () => {
+          this.getPetDetails(headers, id);
+        },
+        error: (error) => {
+          console.log(error, +' error');
+        },
+      });
   }
 
   deleteVaccine(vaccine: Vaccine) {
