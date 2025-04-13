@@ -81,7 +81,7 @@
               icon="pi pi-plus"
               class="mr-2"
               [rounded]="true"
-              (onClick)="addNewVaccine()"
+              (onClick)="editProduct(pet)"
             />
           </th>
         </tr>
@@ -127,7 +127,7 @@
     <p-dialog
       [(visible)]="petDialog"
       [style]="{ width: '450px' }"
-      header="Atualizar Vacina"
+      header="{{ service }}"
       [modal]="true"
       styleClass="p-fluid"
     >
@@ -150,7 +150,7 @@
             required
             autofocus
             placeholder="Nome da Vacina"
-            [(ngModel)]="currentVaccine.name"
+            [(ngModel)]="vaccine.name"
           />
           <small class="p-error" *ngIf="submitted && !pet.name">
             Name is required.
@@ -163,7 +163,7 @@
             type="date"
             id="description"
             pInputTextarea
-            [(ngModel)]="currentVaccine.date"
+            [(ngModel)]="vaccine.date"
             required
           />
         </div>

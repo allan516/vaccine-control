@@ -22,12 +22,12 @@ export class PetService {
   updateVaccine(
     token: HttpHeaders,
     id: string,
-    vaccine: Vaccine,
-    currentVaccine: Vaccine
+    currentVaccine: Vaccine,
+    vaccine: Vaccine
   ): Observable<Object> {
     return this.http.patch(
-      `${this.baseUrl}/${id}/vaccine/${vaccine}`,
-      currentVaccine,
+      `${this.baseUrl}/${id}/vaccine/${currentVaccine}`,
+      vaccine,
       {
         headers: token,
       }

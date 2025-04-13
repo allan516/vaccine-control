@@ -56,6 +56,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PetDetailsComponent implements OnInit {
   files: TreeNode[] = [];
+  service: string = '';
 
   petDialog: boolean = false;
 
@@ -63,8 +64,8 @@ export class PetDetailsComponent implements OnInit {
 
   pet!: Pet;
 
-  vaccine!: Vaccine;
-  currentVaccine: Vaccine = { name: '', date: new Date() };
+  currentVaccine!: Vaccine;
+  vaccine: Vaccine = { name: '', date: new Date() };
 
   newVaccine: Vaccine = { name: 'vacinne', date: '' };
 
@@ -82,7 +83,8 @@ export class PetDetailsComponent implements OnInit {
   ) {}
 
   getVaccine(vaccine: Vaccine) {
-    return (this.vaccine = vaccine);
+    this.service = 'Atualizar Vacina';
+    return (this.currentVaccine = vaccine);
   }
 
   openNew() {
@@ -91,46 +93,54 @@ export class PetDetailsComponent implements OnInit {
     this.petDialog = true;
   }
 
-  deleteSelectedProducts() {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected products?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.pets = this.pets.filter(
-          (val) => !this.selectedPets?.includes(val)
-        );
-        this.selectedPets = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Products Deleted',
-          life: 3000,
-        });
-      },
-    });
-  }
-
-  editProduct(product: Pet) {
+  editProduct(product: Pet | Vaccine) {
     this.pet = { ...product };
     this.petDialog = true;
   }
 
-  addNewVaccine() {
+  addNewVaccine(product: Pet) {
+    this.pet = { ...product };
+    this.petDialog = true;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const id = this.route.snapshot.paramMap.get('id') as string;
+    this.service = 'Adicionar Nova Vacina';
 
-    this.petService
-      .addNewVaccineService(headers, id, this.newVaccine)
-      .subscribe({
-        next: () => {
-          this.getPetDetails(headers, id);
-        },
-        error: (error) => {
-          console.log(error, +' error');
-        },
-      });
+    this.petService.addNewVaccineService(headers, id, this.vaccine).subscribe({
+      next: () => {
+        this.getPetDetails(headers, id);
+      },
+      error: (error) => {
+        console.log(error, +' error');
+      },
+    });
+
+    this.submitted = true;
+
+    if (this.pet.name?.trim()) {
+      if (this.pet.id) {
+        this.pets[this.findIndexById(this.pet.id)] = this.pet;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Vacina atualizada!',
+          life: 3000,
+        });
+      } else {
+        this.pet.image = 'product-placeholder.svg';
+        this.pets.push(this.pet);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Product Created',
+          life: 3000,
+        });
+      }
+
+      this.pets = [...this.pets];
+      this.petDialog = false;
+      this.pet = {};
+    }
   }
 
   deleteVaccine(vaccine: Vaccine) {
@@ -173,10 +183,11 @@ export class PetDetailsComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const id = this.route.snapshot.paramMap.get('id') as string;
+
     this.petService
-      .updateVaccine(headers, id, this.vaccine, {
-        name: this.currentVaccine.name,
-        date: this.currentVaccine.date || new Date(),
+      .updateVaccine(headers, id, this.currentVaccine, {
+        name: this.vaccine.name,
+        date: this.vaccine.date || new Date(),
       })
       .subscribe({
         next: () => {
