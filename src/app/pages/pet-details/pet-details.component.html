@@ -81,7 +81,8 @@
               icon="pi pi-plus"
               class="mr-2"
               [rounded]="true"
-              (onClick)="editProduct(pet)"
+              (onClick)="openNew()"
+              title="Adicionar Vacina"
             />
           </th>
         </tr>
@@ -127,7 +128,7 @@
     <p-dialog
       [(visible)]="petDialog"
       [style]="{ width: '450px' }"
-      header="{{ service }}"
+      header="{{ msgHeaderDialog }}"
       [modal]="true"
       styleClass="p-fluid"
     >
@@ -152,7 +153,7 @@
             placeholder="Nome da Vacina"
             [(ngModel)]="vaccine.name"
           />
-          <small class="p-error" *ngIf="submitted && !pet.name">
+          <small class="p-error" *ngIf="submitted && !vaccine.name">
             Name is required.
           </small>
         </div>
@@ -180,7 +181,7 @@
           label="Save"
           icon="pi pi-check"
           [text]="true"
-          (onClick)="updateVaccine()"
+          (onClick)="chooseMethod()"
         />
       </ng-template>
     </p-dialog>

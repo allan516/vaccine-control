@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from '../../shared/menu/menu.component';
 import { PetService } from '../../services/pet.service';
 import { HttpHeaders } from '@angular/common/http';
-import { TreeNode } from 'primeng/api';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { TableModule } from 'primeng/table';
@@ -55,25 +54,19 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './pet-details.component.css',
 })
 export class PetDetailsComponent implements OnInit {
-  files: TreeNode[] = [];
-  service: string = '';
+  msgHeaderDialog: string = '';
+  method: string = '';
 
   petDialog: boolean = false;
 
   pets!: Pet[];
-
   pet!: Pet;
 
-  currentVaccine!: Vaccine;
-  vaccine: Vaccine = { name: '', date: new Date() };
-
-  newVaccine: Vaccine = { name: 'vacinne', date: '' };
+  currentVaccine!: Vaccine; //nome da vacina que será atualizada
+  vaccine: Vaccine = { name: '', date: new Date() }; // nova vacina ou vacinna atualizada
 
   selectedPets!: Pet[] | null;
-
   submitted: boolean = false;
-
-  statuses!: any[];
 
   constructor(
     private petService: PetService,
@@ -83,64 +76,73 @@ export class PetDetailsComponent implements OnInit {
   ) {}
 
   getVaccine(vaccine: Vaccine) {
-    this.service = 'Atualizar Vacina';
+    this.msgHeaderDialog = 'Atualizar Vacina';
     return (this.currentVaccine = vaccine);
   }
 
   openNew() {
+    this.msgHeaderDialog = 'Adicionar Vacina';
+    this.method = 'create';
     this.pet = {};
     this.submitted = false;
     this.petDialog = true;
   }
 
   editProduct(product: Pet | Vaccine) {
+    this.method = 'update';
     this.pet = { ...product };
     this.petDialog = true;
   }
 
-  addNewVaccine(product: Pet) {
-    this.pet = { ...product };
-    this.petDialog = true;
+  chooseMethod() {
+    switch (this.method) {
+      case 'create':
+        this.addNewVaccine();
+        break;
+      case 'update':
+        this.updateVaccine();
+        break;
+      default:
+        break;
+    }
+  }
+
+  addNewVaccine() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const id = this.route.snapshot.paramMap.get('id') as string;
-    this.service = 'Adicionar Nova Vacina';
+    this.msgHeaderDialog = 'Adicionar Nova Vacina';
 
     this.petService.addNewVaccineService(headers, id, this.vaccine).subscribe({
       next: () => {
+        this.submitted = true;
+
+        if (this.vaccine) {
+          if (this.vaccine.name) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'Nova Vacina Criada!',
+              life: 3000,
+            });
+          }
+
+          this.pets = [...this.pets];
+          this.petDialog = false;
+          this.pet = {};
+        }
         this.getPetDetails(headers, id);
       },
-      error: (error) => {
-        console.log(error, +' error');
+      error: () => {
+        this.submitted = true;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Vacina inválida!',
+          life: 3000,
+        });
       },
     });
-
-    this.submitted = true;
-
-    if (this.pet.name?.trim()) {
-      if (this.pet.id) {
-        this.pets[this.findIndexById(this.pet.id)] = this.pet;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Vacina atualizada!',
-          life: 3000,
-        });
-      } else {
-        this.pet.image = 'product-placeholder.svg';
-        this.pets.push(this.pet);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Created',
-          life: 3000,
-        });
-      }
-
-      this.pets = [...this.pets];
-      this.petDialog = false;
-      this.pet = {};
-    }
   }
 
   deleteVaccine(vaccine: Vaccine) {
@@ -191,51 +193,31 @@ export class PetDetailsComponent implements OnInit {
       })
       .subscribe({
         next: () => {
-          return this.getPetDetails(headers, id);
+          this.submitted = true;
+          if (this.vaccine) {
+            if (this.vaccine.name) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'Vacina atualizada!',
+                life: 3000,
+              });
+            }
+            this.petDialog = false;
+          }
+          this.getPetDetails(headers, id);
         },
-        error: (error) => {
-          console.log('erro: ' + error);
+        error: () => {
+          this.submitted = true;
+
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Vacina Inválida!',
+            life: 3000,
+          });
         },
       });
-
-    this.submitted = true;
-
-    if (this.pet.name?.trim()) {
-      if (this.pet.id) {
-        this.pets[this.findIndexById(this.pet.id)] = this.pet;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Vacina atualizada!',
-          life: 3000,
-        });
-      } else {
-        this.pet.image = 'product-placeholder.svg';
-        this.pets.push(this.pet);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Created',
-          life: 3000,
-        });
-      }
-
-      this.pets = [...this.pets];
-      this.petDialog = false;
-      this.pet = {};
-    }
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.pets.length; i++) {
-      if (this.pets[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
   }
 
   getPetDetails(header: HttpHeaders, id: string) {

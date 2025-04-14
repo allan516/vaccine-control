@@ -17,6 +17,10 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
+        label: 'Vaccine Control',
+        icon: 'pi pi-pen-to-square',
+      },
+      {
         label: 'Home',
         icon: 'pi pi-home',
         command: () => this.goToHome(),
