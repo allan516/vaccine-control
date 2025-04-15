@@ -6,11 +6,12 @@
      delete-pet
      update-pet
      🆗post-vaccine
-     update-vaccine
-     delete-vaccine
+     🆗update-vaccine
+     🆗delete-vaccine
      get-vaccine
   -->
 <main>
+  <p-toast />
   <p-treeTable
     [value]="files"
     [columns]="cols"
@@ -53,10 +54,12 @@
               icon="pi pi-trash"
               rounded="true"
               [style]="{ background: 'white', color: 'black' }"
+              (onClick)="deletePet(rowData)"
             />
           </ng-container>
         </td>
       </tr>
+      <p-confirmDialog [style]="{ width: '450px' }" />
     </ng-template>
   </p-treeTable>
 </main>

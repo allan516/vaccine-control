@@ -121,7 +121,7 @@ export class PetDetailsComponent implements OnInit {
           if (this.vaccine.name) {
             this.messageService.add({
               severity: 'success',
-              summary: 'Successful',
+              summary: 'Sucesso',
               detail: 'Nova Vacina Criada!',
               life: 3000,
             });
@@ -157,7 +157,6 @@ export class PetDetailsComponent implements OnInit {
           `Bearer ${token}`
         );
         const id = this.route.snapshot.paramMap.get('id') as string;
-        this.petService;
         this.petService.deleteVaccine(headers, id, vaccine).subscribe({
           next: () => {
             this.getPetDetails(headers, id);
@@ -168,7 +167,7 @@ export class PetDetailsComponent implements OnInit {
         });
         this.messageService.add({
           severity: 'success',
-          summary: 'Successful',
+          summary: 'Sucesso',
           detail: 'Vacina apagada!',
           life: 3000,
         });
@@ -198,7 +197,7 @@ export class PetDetailsComponent implements OnInit {
             if (this.vaccine.name) {
               this.messageService.add({
                 severity: 'success',
-                summary: 'Successful',
+                summary: 'Sucesso',
                 detail: 'Vacina atualizada!',
                 life: 3000,
               });

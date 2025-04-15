@@ -70,7 +70,6 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="category" style="min-width: 10rem">Vacinas</th>
-
           <th pSortableColumn="category">
             <p-button
               [style]="{
@@ -81,6 +80,18 @@
               icon="pi pi-plus"
               class="mr-2"
               [rounded]="true"
+              (onClick)="openNew()"
+              title="Adicionar Vacina"
+            />
+
+            <p-button
+              [style]="{
+                margin: '0px 10px 0px 0px',
+                background: 'transparent',
+                color: '#2e3744',
+                border: 'none'
+              }"
+              label="Adicionar Vacina"
               (onClick)="openNew()"
               title="Adicionar Vacina"
             />
@@ -119,7 +130,7 @@
           </td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="summary"> </ng-template>
+      <ng-template pTemplate="summary"></ng-template>
     </p-table>
     <ng-template pTemplate="summary"> </ng-template>
 
@@ -154,7 +165,7 @@
             [(ngModel)]="vaccine.name"
           />
           <small class="p-error" *ngIf="submitted && !vaccine.name">
-            Name is required.
+            Nome é obrigatório.
           </small>
         </div>
         <div class="field">
