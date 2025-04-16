@@ -58,6 +58,7 @@ export class PetDetailsComponent implements OnInit {
   method: string = '';
 
   petDialog: boolean = false;
+  isEmpty: boolean = false;
 
   pets!: Pet[];
   pet!: Pet;
@@ -112,6 +113,7 @@ export class PetDetailsComponent implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.msgHeaderDialog = 'Adicionar Nova Vacina';
+    this.isEmpty = false;
 
     this.petService.addNewVaccineService(headers, id, this.vaccine).subscribe({
       next: () => {
@@ -222,6 +224,7 @@ export class PetDetailsComponent implements OnInit {
   getPetDetails(header: HttpHeaders, id: string) {
     this.petService.getPetById(header, id).subscribe({
       next: (data) => {
+        if (data.vaccines.length === 0) this.isEmpty = true;
         return (this.pets = [
           {
             id: data._id,

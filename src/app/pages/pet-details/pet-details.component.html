@@ -129,6 +129,9 @@
             />
           </td>
         </tr>
+        <tr *ngIf="isEmpty">
+          <td style="text-align: center">Lista Vazia</td>
+        </tr>
       </ng-template>
       <ng-template pTemplate="summary"></ng-template>
     </p-table>

@@ -27,7 +27,14 @@
           {{ col.header }}
         </th>
       </tr>
+
+      <tr *ngIf="isEmpty">
+        <td [style]="{ 'padding-top': '50px', 'text-align': 'center' }">
+          Lista Vazia
+        </td>
+      </tr>
     </ng-template>
+
     <ng-template
       pTemplate="body"
       let-rowNode
@@ -61,5 +68,6 @@
       </tr>
       <p-confirmDialog [style]="{ width: '450px' }" />
     </ng-template>
+    <ng-template pTemplate="summary"></ng-template>
   </p-treeTable>
 </main>

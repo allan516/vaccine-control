@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
   files: TreeNode[] = [];
   cols: Column[] = [];
   id: string = '';
+  isEmpty: boolean = false;
 
   constructor(
     private petService: PetService,
@@ -55,6 +56,7 @@ export class HomeComponent implements OnInit {
 
     this.petService.getAllPet(headers).subscribe({
       next: (data) => {
+        if (data.length === 0) this.isEmpty = true;
         this.files = data.map((item: any) => {
           this.id = item._id;
           return {
