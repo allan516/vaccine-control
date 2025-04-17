@@ -6,3 +6,7 @@ main {
   height: 80vh;
   margin: 150px auto;
 }
+
+.p-btn {
+  display: inline-block;
+}

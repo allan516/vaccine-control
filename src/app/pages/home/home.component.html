@@ -26,6 +26,20 @@
         <th *ngFor="let col of columns">
           {{ col.header }}
         </th>
+        <th>
+          <p-button
+            [style]="{
+              margin: '0px 10px 0px 0px',
+              background: 'white',
+              color: 'black'
+            }"
+            icon="pi pi-plus"
+            class="mr-2"
+            [rounded]="true"
+            title="Adicionar Pet"
+          />
+          <p class="p-btn">Adicionar Pet</p>
+        </th>
       </tr>
 
       <tr *ngIf="isEmpty">
