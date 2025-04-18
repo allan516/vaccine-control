@@ -11,6 +11,19 @@ import { PetDetailsComponent } from '../pet-details/pet-details.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Pet } from '../../models/pet';
 import { ToastModule } from 'primeng/toast';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RatingModule } from 'primeng/rating';
+import { RippleModule } from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { ToolbarModule } from 'primeng/toolbar';
 
 interface Column {
   field: string;
@@ -29,6 +42,21 @@ interface Column {
     ButtonModule,
     CommonModule,
     ConfirmDialogModule,
+
+    TableModule,
+    DialogModule,
+    RippleModule,
+    ToolbarModule,
+    InputTextModule,
+    InputTextareaModule,
+    FileUploadModule,
+    DropdownModule,
+    TagModule,
+    RadioButtonModule,
+    RatingModule,
+    InputTextModule,
+    FormsModule,
+    InputNumberModule,
   ],
   providers: [
     PetService,
@@ -42,6 +70,12 @@ export class HomeComponent implements OnInit {
   cols: Column[] = [];
   id: string = '';
   isEmpty: boolean = false;
+  petDialog: boolean = false;
+  msgHeaderDialog: string = '';
+  pet!: Pet;
+  numberPets!: number;
+  submitted: boolean = false;
+  method!: string;
 
   constructor(
     private petService: PetService,
@@ -53,12 +87,14 @@ export class HomeComponent implements OnInit {
   getPets() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    let count = 0;
 
     this.petService.getAllPet(headers).subscribe({
       next: (data) => {
         if (data.length === 0) this.isEmpty = true;
         this.files = data.map((item: any) => {
           this.id = item._id;
+          count++;
           return {
             data: {
               _id: item._id,
@@ -69,6 +105,7 @@ export class HomeComponent implements OnInit {
             children: [],
           };
         });
+        this.numberPets = count;
       },
       error: () => {
         console.log('erro');
@@ -76,18 +113,57 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  addNewPet() {
+    const token = localStorage.getItem('token');
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.petService.addNewPetService(header, this.pet).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Pet criado com sucesso!',
+          life: 3000,
+        });
+        this.isEmpty = false;
+        this.petDialog = false;
+        this.getPets();
+      },
+      error: () => {
+        if (!this.pet.name || !this.pet.age) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Todos os campos devem ser preenchidos.',
+            life: 3000,
+          });
+        } else if (this.numberPets >= 3) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Número máximo de pets.',
+            life: 3000,
+          });
+          this.petDialog = false;
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Ocorreu um erro inesperado.',
+            life: 3000,
+          });
+        }
+      },
+    });
+  }
+
   deletePet(pet: Pet) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.confirmationService.confirm({
       message: `Deseja realmente apagar ${pet.name}?`,
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        const token = localStorage.getItem('token');
-        const headers = new HttpHeaders().set(
-          'Authorization',
-          `Bearer ${token}`
-        );
-
         this.petService.deletePetService(headers, pet._id as string).subscribe({
           next: () => {
             this.messageService.add({
@@ -96,10 +172,18 @@ export class HomeComponent implements OnInit {
               detail: 'Pet apagado com sucesso!',
               life: 3000,
             });
+            this.confirmationService.close();
             this.getPets();
           },
-          error: (error) => {
-            console.log(error);
+          error: () => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Ocorreu um erro inesperado.',
+              life: 3000,
+            });
+            this.confirmationService.close();
+            this.getPets();
           },
         });
       },
@@ -113,13 +197,38 @@ export class HomeComponent implements OnInit {
     return this.route.navigate(['/pet', id]);
   }
 
+  hideDialog() {
+    this.petDialog = false;
+    this.submitted = false;
+  }
+
+  openNew() {
+    this.msgHeaderDialog = 'Adicionar novo Pet';
+    this.method = 'create';
+    this.pet = {};
+    this.submitted = false;
+    this.petDialog = true;
+  }
+
+  chooseMethod() {
+    switch (this.method) {
+      case 'create':
+        this.addNewPet();
+        break;
+      case 'update':
+        this.addNewPet();
+        break;
+      default:
+        break;
+    }
+  }
+
   ngOnInit() {
     this.getPets();
     this.cols = [
       { field: 'name', header: 'Pet' },
       { field: 'age', header: 'Idade' },
       { field: 'vaccines', header: 'Vacinas' },
-      { field: '', header: '' },
     ];
   }
 }

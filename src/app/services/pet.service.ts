@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Vaccine } from '../models/vaccine';
+import { Pet } from '../models/pet';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +62,7 @@ export class PetService {
       }
     );
   }
-  addNewPetService() {
-    console.log('novo pet adicionado');
+  addNewPetService(token: HttpHeaders, pet: Pet): Observable<Object> {
+    return this.http.post(`${this.baseUrl}`, pet, { headers: token });
   }
 }

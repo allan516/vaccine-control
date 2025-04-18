@@ -29,7 +29,7 @@
         <th>
           <p-button
             [style]="{
-              margin: '0px 10px 0px 0px',
+              margin: '0px 10px 0px 10px',
               background: 'white',
               color: 'black'
             }"
@@ -37,6 +37,7 @@
             class="mr-2"
             [rounded]="true"
             title="Adicionar Pet"
+            (onClick)="openNew()"
           />
           <p class="p-btn">Adicionar Pet</p>
         </th>
@@ -59,29 +60,95 @@
         <td *ngFor="let col of columns; let i = index; let last = last">
           <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
           {{ rowData[col.field] }}
-          <ng-container *ngIf="last">
-            <p-button
-              icon="pi pi-search"
-              rounded="true"
-              [style]="{
-                'margin-right': '.5em',
-                background: 'white',
-                color: 'black'
-              }"
-              (onClick)="getPetDetailsComponent(rowData._id)"
-            />
+          <ng-container *ngIf="last"> </ng-container>
+        </td>
+        <td>
+          <p-button
+            icon="pi pi-search"
+            rounded="true"
+            [style]="{
+              'margin-right': '.5em',
+              background: 'white',
+              color: 'black'
+            }"
+            (onClick)="getPetDetailsComponent(rowData._id)"
+          />
 
-            <p-button
-              icon="pi pi-trash"
-              rounded="true"
-              [style]="{ background: 'white', color: 'black' }"
-              (onClick)="deletePet(rowData)"
-            />
-          </ng-container>
+          <p-button
+            icon="pi pi-trash"
+            rounded="true"
+            [style]="{ background: 'white', color: 'black' }"
+            (onClick)="deletePet(rowData)"
+          />
         </td>
       </tr>
       <p-confirmDialog [style]="{ width: '450px' }" />
     </ng-template>
     <ng-template pTemplate="summary"></ng-template>
   </p-treeTable>
+
+  <!-- adicionando um novo pet -->
+
+  <p-dialog
+    [(visible)]="petDialog"
+    [style]="{ width: '450px' }"
+    header="{{ msgHeaderDialog }}"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <img
+        [src]="
+          'https://primefaces.org/cdn/primeng/images/demo/product/' + pet.image
+        "
+        [alt]="pet.image"
+        class="block m-auto pb-3"
+        *ngIf="pet.image"
+      />
+      <div class="field">
+        <label for="name">Pet</label>
+        <input
+          type="text"
+          pInputText
+          id="name"
+          required
+          autofocus
+          placeholder="Nome do Pet"
+          [(ngModel)]="pet.name"
+        />
+        <small class="p-error" *ngIf="submitted && !pet.name">
+          Nome é obrigatório.
+        </small>
+      </div>
+      <div class="field">
+        <label for="description">Idade</label>
+
+        <input
+          type="number"
+          id="description"
+          pInputTextarea
+          placeholder="Idade"
+          [(ngModel)]="pet.age"
+          required
+        />
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        [text]="true"
+        (onClick)="hideDialog()"
+      />
+      <p-button
+        label="Save"
+        icon="pi pi-check"
+        [text]="true"
+        (onClick)="chooseMethod()"
+      />
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{ width: '450px' }" />
 </main>
