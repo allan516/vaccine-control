@@ -72,7 +72,7 @@
             }"
             icon="pi pi-ellipsis-h"
             [rounded]="true"
-            (onClick)="openMenuToshoose(rowData, rowData._id)"
+            (onClick)="openMenuToChoose(rowData, rowData._id)"
           />
         </td>
       </tr>
@@ -85,7 +85,7 @@
 
   <p-dialog
     [(visible)]="menuOptions"
-    [style]="{ width: '450px' }"
+    [style]="{ width: '280px' }"
     header="{{ msgHeaderDialog }}"
     [modal]="true"
     styleClass="p-fluid"
@@ -102,7 +102,7 @@
             outline: 'none'
           }"
           label="Editar Pet"
-          class="aqui vai uma função"
+          (onClick)="edit()"
         />
       </div>
 
@@ -116,7 +116,7 @@
             border: 'none',
             outline: 'none'
           }"
-          label="Visualizar Detalhes"
+          label="Lista de Vacinas"
           (onClick)="getPetDetailsComponent()"
         />
       </div>
@@ -140,6 +140,7 @@
       <p-button
         label="Voltar"
         icon="pi pi-reply"
+        [style]="{ margin: '0px', padding: '0px' }"
         [text]="true"
         (onClick)="hideDialog()"
       />

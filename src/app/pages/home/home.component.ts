@@ -75,9 +75,8 @@ export class HomeComponent implements OnInit {
   pet!: Pet;
   numberPets!: number;
   submitted: boolean = false;
-  method!: string;
-
   menuOptions: boolean = false;
+  method!: string;
 
   constructor(
     private petService: PetService,
@@ -158,6 +157,42 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  editPet() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    console.log(this.id);
+    this.petService.updatePet(headers, this.id, this.pet).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Pet atualizado!',
+          life: 3000,
+        });
+        this.petDialog = false;
+        this.menuOptions = false;
+        this.getPets();
+      },
+      error: () => {
+        if (!this.pet.name || !this.pet.age) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Todos os campos devem ser preenchidos.',
+            life: 3000,
+          });
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Ocorreu um erro inesperado.',
+            life: 3000,
+          });
+        }
+      },
+    });
+  }
+
   deletePet() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -210,14 +245,22 @@ export class HomeComponent implements OnInit {
   }
 
   openNew() {
-    this.msgHeaderDialog = 'Adicionar novo Pet';
-    this.method = 'create';
+    this.msgHeaderDialog = 'Adicionar';
     this.pet = {};
+    this.method = 'create';
     this.submitted = false;
     this.petDialog = true;
   }
 
-  openMenuToshoose(pet: Pet, id: string) {
+  edit() {
+    this.msgHeaderDialog = 'Editar';
+    this.pet = {};
+    this.method = 'update';
+    this.submitted = false;
+    this.petDialog = true;
+  }
+
+  openMenuToChoose(pet: Pet, id: string) {
     this.pet = pet;
     this.id = id;
     this.msgHeaderDialog = 'Menu de opções';
@@ -230,7 +273,7 @@ export class HomeComponent implements OnInit {
         this.addNewPet();
         break;
       case 'update':
-        this.addNewPet();
+        this.editPet();
         break;
       default:
         break;

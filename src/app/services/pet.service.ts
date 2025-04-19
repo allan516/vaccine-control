@@ -20,6 +20,12 @@ export class PetService {
     return this.http.get(`${this.baseUrl}/${id}`, { headers: token });
   }
 
+  updatePet(token: HttpHeaders, id: string, pet: Pet): Observable<Object> {
+    return this.http.patch(`${this.baseUrl}/${id}`, pet, {
+      headers: token,
+    });
+  }
+
   deletePetService(token: HttpHeaders, id: string): Observable<Object> {
     return this.http.delete(`${this.baseUrl}/${id}`, { headers: token });
   }
