@@ -10,3 +10,12 @@ main {
 .p-btn {
   display: inline-block;
 }
+
+.btn-options {
+  display: flex;
+}
+
+:host ::ng-deep .p-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

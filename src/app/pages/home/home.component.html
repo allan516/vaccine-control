@@ -2,8 +2,8 @@
 
 <!-- 🆗get-pet
      🆗get-pet-by-id
-     post-pet
-     delete-pet
+     🆗post-pet
+     🆗delete-pet
      update-pet
      🆗post-vaccine
      🆗update-vaccine
@@ -64,21 +64,15 @@
         </td>
         <td>
           <p-button
-            icon="pi pi-search"
-            rounded="true"
             [style]="{
               'margin-right': '.5em',
               background: 'white',
-              color: 'black'
+              color: 'black',
+              border: 'none'
             }"
-            (onClick)="getPetDetailsComponent(rowData._id)"
-          />
-
-          <p-button
-            icon="pi pi-trash"
-            rounded="true"
-            [style]="{ background: 'white', color: 'black' }"
-            (onClick)="deletePet(rowData)"
+            icon="pi pi-ellipsis-h"
+            [rounded]="true"
+            (onClick)="openMenuToshoose(rowData, rowData._id)"
           />
         </td>
       </tr>
@@ -86,6 +80,73 @@
     </ng-template>
     <ng-template pTemplate="summary"></ng-template>
   </p-treeTable>
+
+  <!-- opções de menu -->
+
+  <p-dialog
+    [(visible)]="menuOptions"
+    [style]="{ width: '450px' }"
+    header="{{ msgHeaderDialog }}"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="field btn-options">
+        <p-button
+          icon="pi pi-pencil"
+          rounded="true"
+          [style]="{
+            background: 'white',
+            color: '#2e3744',
+            border: 'none',
+            outline: 'none'
+          }"
+          label="Editar Pet"
+          class="aqui vai uma função"
+        />
+      </div>
+
+      <div class="field btn-options">
+        <p-button
+          icon="pi pi-search"
+          rounded="true"
+          [style]="{
+            background: 'white',
+            color: '#2e3744',
+            border: 'none',
+            outline: 'none'
+          }"
+          label="Visualizar Detalhes"
+          (onClick)="getPetDetailsComponent()"
+        />
+      </div>
+      <div class="field btn-options">
+        <p-button
+          icon="pi pi-trash"
+          rounded="true"
+          [style]="{
+            background: 'white',
+            color: '#2e3744',
+            border: 'none',
+            outline: 'none'
+          }"
+          label="Apagar Pet"
+          (onClick)="deletePet()"
+        />
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        label="Voltar"
+        icon="pi pi-reply"
+        [text]="true"
+        (onClick)="hideDialog()"
+      />
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{ width: '450px' }" />
 
   <!-- adicionando um novo pet -->
 

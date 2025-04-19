@@ -77,6 +77,8 @@ export class HomeComponent implements OnInit {
   submitted: boolean = false;
   method!: string;
 
+  menuOptions: boolean = false;
+
   constructor(
     private petService: PetService,
     private route: Router,
@@ -156,49 +158,54 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  deletePet(pet: Pet) {
+  deletePet() {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.confirmationService.confirm({
-      message: `Deseja realmente apagar ${pet.name}?`,
+      message: `Deseja realmente apagar ${this.pet.name}?`,
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.petService.deletePetService(headers, pet._id as string).subscribe({
-          next: () => {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Sucesso',
-              detail: 'Pet apagado com sucesso!',
-              life: 3000,
-            });
-            this.confirmationService.close();
-            this.getPets();
-          },
-          error: () => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Erro',
-              detail: 'Ocorreu um erro inesperado.',
-              life: 3000,
-            });
-            this.confirmationService.close();
-            this.getPets();
-          },
-        });
+        this.petService
+          .deletePetService(headers, this.pet._id as string)
+          .subscribe({
+            next: () => {
+              this.menuOptions = false;
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: 'Pet apagado com sucesso!',
+                life: 3000,
+              });
+              this.confirmationService.close();
+              this.getPets();
+            },
+            error: () => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Ocorreu um erro inesperado.',
+                life: 3000,
+              });
+              this.confirmationService.close();
+              this.getPets();
+            },
+          });
       },
       reject: () => {
+        this.confirmationService.close();
         return this.getPets();
       },
     });
   }
 
-  getPetDetailsComponent(id: string) {
-    return this.route.navigate(['/pet', id]);
+  getPetDetailsComponent() {
+    return this.route.navigate(['/pet', this.id]);
   }
 
   hideDialog() {
     this.petDialog = false;
+    this.menuOptions = false;
     this.submitted = false;
   }
 
@@ -208,6 +215,13 @@ export class HomeComponent implements OnInit {
     this.pet = {};
     this.submitted = false;
     this.petDialog = true;
+  }
+
+  openMenuToshoose(pet: Pet, id: string) {
+    this.pet = pet;
+    this.id = id;
+    this.msgHeaderDialog = 'Menu de opções';
+    this.menuOptions = true;
   }
 
   chooseMethod() {
