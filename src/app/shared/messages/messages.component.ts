@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 
@@ -11,11 +11,4 @@ import { MessagesModule } from 'primeng/messages';
 export class MessageComponent {
   @Input()
   messages!: Message[];
-
-  /*
-  [{ severity: 'info', detail: 'Info Message' }];
-  [{ severity: 'success', detail: 'Sucesso!' }];
-  [{ severity: 'warn', detail: 'Warning Message' }];
-  [{ severity: 'error', detail: 'Usuário ou senha incorreto!' }];
-*/
 }

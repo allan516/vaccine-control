@@ -18,7 +18,6 @@ export class MenuComponent implements OnInit {
     this.items = [
       {
         label: 'Vaccine Control',
-        icon: 'pi pi-pen-to-square',
       },
       {
         label: 'Home',
