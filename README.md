@@ -1,27 +1,64 @@
-# VaccineControl
+# 💉 VaccineControl
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
+Sistema para gerenciamento de vacinas de pets, desenvolvido com foco em aprendizado e prática de tecnologias modernas no desenvolvimento web.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 📌 Descrição
 
-## Code scaffolding
+Após fazer login, o usuário pode cadastrar seus pets, editar informações, excluir se necessário, e gerenciar as vacinas de cada pet. É possível criar, editar, excluir e visualizar vacinas de forma prática e eficiente.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Neste projeto, trabalhei com autenticação de usuários utilizando JWT, controle de sessões com `localStorage`, proteção de rotas com Guards, e uso de middlewares para garantir que apenas usuários autenticados possam acessar determinadas funcionalidades.
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🚀 Tecnologias Utilizadas
 
-## Running unit tests
+- **Angular** – Framework frontend para SPAs
+- **TypeScript** – Tipagem estática para JavaScript
+- **MongoDB Atlas** – Banco de dados NoSQL na nuvem
+- **JWT (JSON Web Tokens)** – Autenticação de usuários
+- **PrimeNG (NGPrime)** – Componentes UI modernos
+- **Mongoose** – ODM para trabalhar com MongoDB
+- **LocalStorage** – Armazenamento local de credenciais
+- **Angular Guards** – Proteção de rotas
+- **Middlewares personalizados** – Controle de autenticação
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## ⚙️ Funcionalidades
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- 🔐 **Login de usuários com autenticação JWT**
+- 🐾 **Cadastro, edição e exclusão de pets**
+- 💉 **Gerenciamento de vacinas por pet**
+  - Criar vacina
+  - Editar vacina
+  - Excluir vacina
+  - Visualizar lista de vacinas
+- 🛡️ **Rotas protegidas para usuários autenticados**
+- 💾 **Armazenamento seguro de tokens no LocalStorage**
 
-## Further help
+---
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## 📚 Aprendizados
+
+Durante o desenvolvimento, aprendi bastante sobre:
+
+- Fluxo de autenticação com JWT
+- Integração frontend Angular com backend Node.js
+- Criação e consumo de APIs RESTful
+- Gerenciamento de tokens e sessões
+- Proteção de rotas com Angular Guards
+- Validação no frontend e backend
+
+---
+
+## 🧑‍💻 Autor
+
+Feito com dedicação por [Allan Mendes](https://github.com/allan516)
+
+---
+
+## 🎥
+
+---
