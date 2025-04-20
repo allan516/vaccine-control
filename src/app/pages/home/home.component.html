@@ -1,15 +1,5 @@
 <app-menu></app-menu>
 
-<!-- 🆗get-pet
-     🆗get-pet-by-id
-     🆗post-pet
-     🆗delete-pet
-     update-pet
-     🆗post-vaccine
-     🆗update-vaccine
-     🆗delete-vaccine
-     get-vaccine
-  -->
 <main>
   <p-toast />
   <p-treeTable
@@ -94,10 +84,9 @@
       <div class="field btn-options">
         <p-button
           icon="pi pi-pencil"
-          rounded="true"
           [style]="{
-            background: 'white',
-            color: '#2e3744',
+            background: 'transparent',
+            color: '#585858',
             border: 'none',
             outline: 'none'
           }"
@@ -109,26 +98,24 @@
       <div class="field btn-options">
         <p-button
           icon="pi pi-search"
-          rounded="true"
           [style]="{
-            background: 'white',
-            color: '#2e3744',
+            background: 'transparent',
+            color: '#585858',
             border: 'none',
             outline: 'none'
           }"
-          label="Lista de Vacinas"
+          label="Visualizar Vacinas"
           (onClick)="getPetDetailsComponent()"
         />
       </div>
       <div class="field btn-options">
         <p-button
           icon="pi pi-trash"
-          rounded="true"
           [style]="{
-            background: 'white',
-            color: '#2e3744',
+            background: 'transparent',
+            color: '#585858',
             border: 'none',
-            outline: 'none'
+            outline: 'none',
           }"
           label="Apagar Pet"
           (onClick)="deletePet()"
@@ -149,7 +136,7 @@
 
   <p-confirmDialog [style]="{ width: '450px' }" />
 
-  <!-- adicionando um novo pet -->
+  <!-- adicionando/atualizando um novo pet -->
 
   <p-dialog
     [(visible)]="petDialog"
@@ -159,14 +146,6 @@
     styleClass="p-fluid"
   >
     <ng-template pTemplate="content">
-      <img
-        [src]="
-          'https://primefaces.org/cdn/primeng/images/demo/product/' + pet.image
-        "
-        [alt]="pet.image"
-        class="block m-auto pb-3"
-        *ngIf="pet.image"
-      />
       <div class="field">
         <label for="name">Pet</label>
         <input
@@ -211,6 +190,4 @@
       />
     </ng-template>
   </p-dialog>
-
-  <p-confirmDialog [style]="{ width: '450px' }" />
 </main>

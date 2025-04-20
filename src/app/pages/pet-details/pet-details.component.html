@@ -118,14 +118,14 @@
               [outlined]="true"
               severity="success"
               (onClick)="editProduct(pet)"
-              (onClick)="getVaccine(vaccine.name)"
+              (onClick)="getVaccine(vaccine.id)"
             />
             <p-button
               icon="pi pi-trash"
               severity="danger"
               [rounded]="true"
               [outlined]="true"
-              (onClick)="deleteVaccine(vaccine.name)"
+              (onClick)="deleteVaccine(vaccine)"
             />
           </td>
         </tr>

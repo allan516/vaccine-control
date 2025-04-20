@@ -50,7 +50,7 @@ export class PetService {
     id: string,
     vaccine: Vaccine
   ): Observable<Object> {
-    return this.http.delete(`${this.baseUrl}/${id}/vaccine/${vaccine}`, {
+    return this.http.delete(`${this.baseUrl}/${id}/vaccine/${vaccine.id}`, {
       headers: token,
     });
   }

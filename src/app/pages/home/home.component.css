@@ -13,6 +13,11 @@ main {
 
 .btn-options {
   display: flex;
+  border-radius: 4px;
+}
+
+.btn-options:hover {
+  background-color: rgb(229, 238, 248);
 }
 
 :host ::ng-deep .p-button:focus {

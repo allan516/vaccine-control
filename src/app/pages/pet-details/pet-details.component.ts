@@ -63,7 +63,7 @@ export class PetDetailsComponent implements OnInit {
   pets!: Pet[];
   pet!: Pet;
 
-  currentVaccine!: Vaccine; //nome da vacina que será atualizada
+  vaccineId!: Vaccine; //id da vacina que será atualizada
   vaccine: Vaccine = { name: '', date: new Date() }; // nova vacina ou vacinna atualizada
 
   selectedPets!: Pet[] | null;
@@ -78,7 +78,7 @@ export class PetDetailsComponent implements OnInit {
 
   getVaccine(vaccine: Vaccine) {
     this.msgHeaderDialog = 'Atualizar Vacina';
-    return (this.currentVaccine = vaccine);
+    return (this.vaccineId = vaccine);
   }
 
   openNew() {
@@ -149,7 +149,7 @@ export class PetDetailsComponent implements OnInit {
 
   deleteVaccine(vaccine: Vaccine) {
     this.confirmationService.confirm({
-      message: 'Deseja realmente apagar a vacina: ' + vaccine + '?',
+      message: 'Deseja realmente apagar a vacina: ' + vaccine.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -188,7 +188,7 @@ export class PetDetailsComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id') as string;
 
     this.petService
-      .updateVaccine(headers, id, this.currentVaccine, {
+      .updateVaccine(headers, id, this.vaccineId, {
         name: this.vaccine.name,
         date: this.vaccine.date || new Date(),
       })
