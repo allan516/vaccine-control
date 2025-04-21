@@ -8,7 +8,7 @@ Sistema para gerenciamento de vacinas de pets, desenvolvido com foco em aprendiz
 
 Após fazer login, o usuário pode cadastrar seus pets, editar informações, excluir se necessário, e gerenciar as vacinas de cada pet. É possível criar, editar, excluir e visualizar vacinas de forma prática e eficiente.
 
-Neste projeto, trabalhei com autenticação de usuários utilizando JWT, controle de sessões com `localStorage`, proteção de rotas com Guards, e uso de middlewares para garantir que apenas usuários autenticados possam acessar determinadas funcionalidades.
+Neste projeto, trabalhei com autenticação de usuários utilizando JWT, controle de sessões com `localStorage` e proteção de rotas com Guards.
 
 ---
 
@@ -18,18 +18,16 @@ Neste projeto, trabalhei com autenticação de usuários utilizando JWT, control
 - **TypeScript** – Tipagem estática para JavaScript
 - **MongoDB Atlas** – Banco de dados NoSQL na nuvem
 - **JWT (JSON Web Tokens)** – Autenticação de usuários
-- **PrimeNG (NGPrime)** – Componentes UI modernos
-- **Mongoose** – ODM para trabalhar com MongoDB
+- **PrimeNG (NGPrime)** – Componentes UI
 - **LocalStorage** – Armazenamento local de credenciais
 - **Angular Guards** – Proteção de rotas
-- **Middlewares personalizados** – Controle de autenticação
-
+  
 ---
 
 ## ⚙️ Funcionalidades
 
 - 🔐 **Login de usuários com autenticação JWT**
-- 🐾 **Cadastro, edição e exclusão de pets**
+- 🐾 **Cadastro, visualização, edição e exclusão de pets**
 - 💉 **Gerenciamento de vacinas por pet**
   - Criar vacina
   - Editar vacina
