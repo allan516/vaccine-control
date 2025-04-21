@@ -1,6 +1,6 @@
 # 💉 VaccineControl
 
-Sistema para gerenciamento de vacinas de pets, desenvolvido com foco em aprendizado e prática de tecnologias modernas no desenvolvimento web.
+Sistema para gerenciamento de vacinas de pets, desenvolvido com foco em aprendizado e prática em desenvolvimento web.
 
 ---
 
@@ -21,7 +21,7 @@ Neste projeto, trabalhei com autenticação de usuários utilizando JWT, control
 - **PrimeNG (NGPrime)** – Componentes UI
 - **LocalStorage** – Armazenamento local de credenciais
 - **Angular Guards** – Proteção de rotas
-  
+
 ---
 
 ## ⚙️ Funcionalidades
@@ -60,4 +60,3 @@ Feito com dedicação por [Allan Mendes](https://github.com/allan516)
 ## 🎥
 
 https://github.com/user-attachments/assets/4af6697a-9a2f-4380-80c4-be9d236f27ff
-
