@@ -116,13 +116,20 @@
               class="mr-2"
               [rounded]="true"
               [outlined]="true"
-              severity="success"
+              [style]="{
+                border: '2px solid #585858',
+                color: '#585858',
+                'margin-right': '10px'
+              }"
               (onClick)="editProduct(pet)"
               (onClick)="getVaccine(vaccine.id)"
             />
             <p-button
               icon="pi pi-trash"
-              severity="danger"
+              [style]="{
+                border: '2px solid #585858',
+                color: '#585858'
+              }"
               [rounded]="true"
               [outlined]="true"
               (onClick)="deleteVaccine(vaccine)"
