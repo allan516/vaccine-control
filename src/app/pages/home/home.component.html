@@ -75,7 +75,7 @@
 
   <p-dialog
     [(visible)]="menuOptions"
-    [style]="{ width: '280px' }"
+    [style]="{ width: '300px' }"
     header="{{ msgHeaderDialog }}"
     [modal]="true"
     styleClass="p-fluid"
@@ -104,7 +104,7 @@
             border: 'none',
             outline: 'none'
           }"
-          label="Visualizar Vacinas"
+          label="Histórico de Vacinas"
           (onClick)="getPetDetailsComponent()"
         />
       </div>
@@ -173,17 +173,43 @@
           required
         />
       </div>
+
+      <div class="field">
+        <label for="breed">Raça</label>
+        <input
+          type="text"
+          pInputText
+          id="breed"
+          required
+          autofocus
+          placeholder="Raça"
+          [(ngModel)]="pet.breed"
+        />
+      </div>
+
+      <div class="field">
+        <label for="category">Categoria</label>
+        <input
+          type="text"
+          pInputText
+          id="category"
+          required
+          autofocus
+          placeholder="Ex: canino"
+          [(ngModel)]="pet.category"
+        />
+      </div>
     </ng-template>
 
     <ng-template pTemplate="footer">
       <p-button
-        label="Cancel"
+        label="Cancelar"
         icon="pi pi-times"
         [text]="true"
         (onClick)="hideDialog()"
       />
       <p-button
-        label="Save"
+        label="Salvar"
         icon="pi pi-check"
         [text]="true"
         (onClick)="chooseMethod()"

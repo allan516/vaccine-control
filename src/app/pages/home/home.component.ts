@@ -9,7 +9,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { PetDetailsComponent } from '../pet-details/pet-details.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Pet } from '../../models/pet';
+import { IPet } from '../../models/IPet';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
   isEmpty: boolean = false;
   petDialog: boolean = false;
   msgHeaderDialog: string = '';
-  pet!: Pet;
+  pet!: any;
   numberPets!: number;
   submitted: boolean = false;
   menuOptions: boolean = false;
@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit {
     this.petService.getAllPet(headers).subscribe({
       next: (data) => {
         if (data.length === 0) this.isEmpty = true;
-        this.files = data.map((item: any) => {
+        this.files = data.map((item: IPet) => {
           this.id = item._id;
           count++;
           return {
@@ -101,6 +101,8 @@ export class HomeComponent implements OnInit {
               _id: item._id,
               name: item.name,
               age: item.age,
+              category: item.category,
+              breed: item.breed,
               vaccines: item.vaccines.length,
             },
             children: [],
@@ -260,7 +262,7 @@ export class HomeComponent implements OnInit {
     this.petDialog = true;
   }
 
-  openMenuToChoose(pet: Pet, id: string) {
+  openMenuToChoose(pet: IPet, id: string) {
     this.pet = pet;
     this.id = id;
     this.msgHeaderDialog = 'Menu de opções';
@@ -285,7 +287,8 @@ export class HomeComponent implements OnInit {
     this.cols = [
       { field: 'name', header: 'Pet' },
       { field: 'age', header: 'Idade' },
-      { field: 'vaccines', header: 'Vacinas' },
+      { field: 'category', header: 'Categoria' },
+      { field: 'breed', header: 'Raça' },
     ];
   }
 }

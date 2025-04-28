@@ -21,8 +21,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { Vaccine } from '../../models/vaccine';
-import { Pet } from '../../models/pet';
+import { IVaccine } from '../../models/IVaccine';
+import { IPet } from '../../models/IPet';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -60,13 +60,13 @@ export class PetDetailsComponent implements OnInit {
   petDialog: boolean = false;
   isEmpty: boolean = false;
 
-  pets!: Pet[];
-  pet!: Pet;
+  pets!: any[];
+  pet!: any;
 
-  vaccineId!: Vaccine; //id da vacina que será atualizada
-  vaccine: Vaccine = { name: '', date: new Date() }; // nova vacina ou vacinna atualizada
+  vaccineId!: IVaccine; //id da vacina que será atualizada
+  vaccine: IVaccine = { name: '', date: new Date() }; // nova vacina ou vacinna atualizada
 
-  selectedPets!: Pet[] | null;
+  selectedPets!: IPet[] | null;
   submitted: boolean = false;
 
   constructor(
@@ -76,20 +76,20 @@ export class PetDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  getVaccine(vaccine: Vaccine) {
-    this.msgHeaderDialog = 'Atualizar Vacina';
-    return (this.vaccineId = vaccine);
+  getIdVaccine(vaccineId: IVaccine) {
+    return (this.vaccineId = vaccineId);
   }
 
   openNew() {
-    this.msgHeaderDialog = 'Adicionar Vacina';
+    this.msgHeaderDialog = 'Agendar Vacina';
     this.method = 'create';
     this.pet = {};
     this.submitted = false;
     this.petDialog = true;
   }
 
-  editProduct(product: Pet | Vaccine) {
+  editProduct(product: IPet | IVaccine) {
+    this.msgHeaderDialog = 'Editar Vacina';
     this.method = 'update';
     this.pet = { ...product };
     this.petDialog = true;
@@ -112,7 +112,6 @@ export class PetDetailsComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const id = this.route.snapshot.paramMap.get('id') as string;
-    this.msgHeaderDialog = 'Adicionar Nova Vacina';
     this.isEmpty = false;
 
     this.petService.addNewVaccineService(headers, id, this.vaccine).subscribe({
@@ -147,7 +146,7 @@ export class PetDetailsComponent implements OnInit {
     });
   }
 
-  deleteVaccine(vaccine: Vaccine) {
+  deleteVaccine(vaccine: IVaccine) {
     this.confirmationService.confirm({
       message: 'Deseja realmente apagar a vacina: ' + vaccine.name + '?',
       header: 'Confirm',

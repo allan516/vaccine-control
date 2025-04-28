@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Vaccine } from '../models/vaccine';
-import { Pet } from '../models/pet';
+import { IVaccine } from '../models/IVaccine';
+import { IPet } from '../models/IPet';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class PetService {
     return this.http.get(`${this.baseUrl}/${id}`, { headers: token });
   }
 
-  updatePet(token: HttpHeaders, id: string, pet: Pet): Observable<Object> {
+  updatePet(token: HttpHeaders, id: string, pet: IPet): Observable<Object> {
     return this.http.patch(`${this.baseUrl}/${id}`, pet, {
       headers: token,
     });
@@ -33,8 +33,8 @@ export class PetService {
   updateVaccine(
     token: HttpHeaders,
     id: string,
-    currentVaccine: Vaccine,
-    vaccine: Vaccine
+    currentVaccine: IVaccine,
+    vaccine: IVaccine
   ): Observable<Object> {
     return this.http.patch(
       `${this.baseUrl}/${id}/vaccine/${currentVaccine}`,
@@ -48,7 +48,7 @@ export class PetService {
   deleteVaccine(
     token: HttpHeaders,
     id: string,
-    vaccine: Vaccine
+    vaccine: IVaccine
   ): Observable<Object> {
     return this.http.delete(`${this.baseUrl}/${id}/vaccine/${vaccine.id}`, {
       headers: token,
@@ -58,7 +58,7 @@ export class PetService {
   addNewVaccineService(
     token: HttpHeaders,
     id: string,
-    vaccine: Vaccine
+    vaccine: IVaccine
   ): Observable<Object> {
     return this.http.post(
       `${this.baseUrl}/${id}/vaccine`,
@@ -68,7 +68,7 @@ export class PetService {
       }
     );
   }
-  addNewPetService(token: HttpHeaders, pet: Pet): Observable<Object> {
+  addNewPetService(token: HttpHeaders, pet: IPet): Observable<Object> {
     return this.http.post(`${this.baseUrl}`, pet, { headers: token });
   }
 }
