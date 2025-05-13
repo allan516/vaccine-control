@@ -1,64 +1,61 @@
 <main class="login-container">
   <section class="login-section">
-    <h1>Login</h1>
-    <p>Seja bem vindo novamente</p>
-
-    <span class="login-google-btn"
-      ><img src="../../../assets/images/google.png" alt="Ícone do Google" />
-      <p>Entrar com o Google</p></span
-    >
-    <span class="section-divider">
-      <hr />
-      <p>Ou entre com Usuário</p>
-      <hr />
-    </span>
-
-    <form
-      class="login-form"
-      action=""
-      method="post"
-      autocomplete="on"
-      [formGroup]="form"
-    >
-      <label for="iuser">Usuário*</label>
-      <input
-        class="login-input"
-        type="text"
-        name=""
-        id="iuser"
-        placeholder="Seu usuário"
-        formControlName="name"
-      />
-
-      <label for="ipassword">Senha*</label>
-      <input
-        class="login-input"
-        type="password"
-        name=""
-        id="ipassword"
-        placeholder="Sua senha aqui"
-        formControlName="password"
-      />
-
-      <span class="login-checkbox">
-        <div>
-          <input
-            class="login-btn-checkbox"
-            type="checkbox"
-            name=""
-            id="icheck"
-          />
-          <label for="icheck">Manter-me conectado</label>
-        </div>
-        <a href="#">Esqueceu a senha?</a>
-      </span>
-
-      <button class="login-btn-entrar" (click)="login()">Entrar</button>
-      <span
-        ><p>Ainda não é registrado? <a href="#">Criar uma conta</a></p></span
+    <div class="login-elements">
+      <h1>Login</h1>
+      <p>Seja bem vindo novamente</p>
+      <span class="login-google-btn"
+        ><img src="../../../assets/images/google.png" alt="Ícone do Google" />
+        <p>Entrar com o Google</p></span
       >
-    </form>
-    <app-message [messages]="messages"></app-message>
+      <span class="section-divider">
+        <hr />
+        <p>Ou entre com Usuário</p>
+        <hr />
+      </span>
+      <form
+        class="login-form"
+        action=""
+        method="post"
+        autocomplete="on"
+        [formGroup]="form"
+      >
+        <label for="iuser">Usuário*</label>
+        <input
+          class="login-input"
+          type="text"
+          name=""
+          id="iuser"
+          placeholder="Seu usuário"
+          formControlName="name"
+        />
+        <label for="ipassword">Senha*</label>
+        <input
+          class="login-input"
+          type="password"
+          name=""
+          id="ipassword"
+          placeholder="Sua senha aqui"
+          formControlName="password"
+        />
+        <span class="login-checkbox">
+          <div>
+            <input
+              class="login-btn-checkbox"
+              type="checkbox"
+              name=""
+              id="icheck"
+            />
+            <label for="icheck">Manter-me conectado</label>
+          </div>
+          <a href="#">Esqueceu a senha?</a>
+        </span>
+        <button class="login-btn-entrar" (click)="login()">Entrar</button>
+        <span
+          ><p>Ainda não é registrado? <a href="#">Criar uma conta</a></p></span
+        >
+      </form>
+      <app-message [messages]="messages"></app-message>
+    </div>
   </section>
   <section>
     <img

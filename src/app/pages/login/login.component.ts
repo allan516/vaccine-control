@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +17,7 @@ import { Message } from 'primeng/api';
     MessageComponent,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrls: ['./login.component-media.css'],
 })
 export class LoginComponent {
   form: FormGroup = new FormGroup({
