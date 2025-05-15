@@ -7,7 +7,8 @@ import { FormGroup } from '@angular/forms';
   providedIn: 'root',
 })
 export class LoginService {
-  private urlApi = 'http://localhost:3000/login';
+  private urlApi = 'https://vaccine-production-9659.up.railway.app/login';
+
 
   constructor(private http: HttpClient) {}
 
