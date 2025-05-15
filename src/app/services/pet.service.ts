@@ -8,7 +8,7 @@ import { IPet } from '../models/IPet';
   providedIn: 'root',
 })
 export class PetService {
-  baseUrl = 'http://localhost:3000/pet';
+  baseUrl = 'https://vaccine-production-9659.up.railway.app/pet';
 
   constructor(private http: HttpClient) {}
 
