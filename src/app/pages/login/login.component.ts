@@ -17,7 +17,7 @@ import { Message } from 'primeng/api';
     MessageComponent,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component-media.css'],
+  styleUrls: ['./login.component-media.css', './login.component.css'],
 })
 export class LoginComponent {
   form: FormGroup = new FormGroup({
