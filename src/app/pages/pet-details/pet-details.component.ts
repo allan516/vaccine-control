@@ -64,7 +64,7 @@ export class PetDetailsComponent implements OnInit {
   pet!: any;
 
   vaccineId!: IVaccine; //id da vacina que será atualizada
-  vaccine: IVaccine = { name: '', date: new Date() }; // nova vacina ou vacinna atualizada
+  vaccine: IVaccine = { name: '', date: '' }; // nova vacina ou vacinna atualizada
 
   selectedPets!: IPet[] | null;
   submitted: boolean = false;
@@ -189,7 +189,7 @@ export class PetDetailsComponent implements OnInit {
     this.petService
       .updateVaccine(headers, id, this.vaccineId, {
         name: this.vaccine.name,
-        date: this.vaccine.date || new Date(),
+        date: this.vaccine.date,
       })
       .subscribe({
         next: () => {

@@ -1,6 +1,6 @@
 export interface IVaccine {
   id?: string;
   name: string;
-  date?: string | Date;
+  date?: string;
   status?: string;
 }
