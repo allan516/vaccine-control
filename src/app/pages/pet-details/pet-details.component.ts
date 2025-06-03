@@ -21,7 +21,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { IVaccine } from '../../models/IVaccine';
+import { IVaccine, IvaccineStatus, VaccineStatus } from '../../models/IVaccine';
 import { IPet } from '../../models/IPet';
 import { ActivatedRoute } from '@angular/router';
 
@@ -68,6 +68,15 @@ export class PetDetailsComponent implements OnInit {
 
   selectedPets!: IPet[] | null;
   submitted: boolean = false;
+
+  vaccineStatus: IvaccineStatus[] = [
+    { name: 'Pendente', code: VaccineStatus.PENDING },
+    { name: 'Aplicada', code: VaccineStatus.APPLIED },
+    { name: 'Expirada', code: VaccineStatus.EXPIRED },
+    { name: 'Perdida', code: VaccineStatus.EXPIRED },
+  ];
+
+  statusSelected: IvaccineStatus | undefined;
 
   constructor(
     private petService: PetService,
@@ -190,6 +199,7 @@ export class PetDetailsComponent implements OnInit {
       .updateVaccine(headers, id, this.vaccineId, {
         name: this.vaccine.name,
         date: this.vaccine.date,
+        status: this.statusSelected?.code,
       })
       .subscribe({
         next: () => {

@@ -159,31 +159,42 @@
       styleClass="p-fluid"
     >
       <ng-template pTemplate="content">
-        <div class="field">
-          <label for="name">Vacina</label>
-          <input
-            type="text"
-            pInputText
-            id="name"
-            required
-            autofocus
-            placeholder="Nome da Vacina"
-            [(ngModel)]="vaccine.name"
-          />
-          <small class="p-error" *ngIf="submitted && !vaccine.name">
-            Nome é obrigatório.
-          </small>
-        </div>
-        <div class="field">
-          <label for="description">Data</label>
+        <div class="edit">
+          <div class="field">
+            <label for="name">Vacina</label>
+            <input
+              type="text"
+              pInputText
+              id="name"
+              required
+              autofocus
+              placeholder="Nome da Vacina"
+              [(ngModel)]="vaccine.name"
+            />
+            <small class="p-error" *ngIf="submitted && !vaccine.name">
+              Nome é obrigatório.
+            </small>
+          </div>
+          <div class="field">
+            <label for="description">Data</label>
+            <input
+              type="date"
+              id="description"
+              pInputTextarea
+              [(ngModel)]="vaccine.date"
+              required
+            />
+          </div>
 
-          <input
-            type="date"
-            id="description"
-            pInputTextarea
-            [(ngModel)]="vaccine.date"
-            required
-          />
+          <div class="card flex justify-content-center">
+            <label for="description">Status</label>
+            <p-dropdown
+              [options]="vaccineStatus"
+              [(ngModel)]="statusSelected"
+              optionLabel="name"
+              placeholder="Status da Vacina"
+            />
+          </div>
         </div>
       </ng-template>
 
