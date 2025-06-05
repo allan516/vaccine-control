@@ -64,7 +64,7 @@ export class PetDetailsComponent implements OnInit {
   pet!: any;
 
   vaccineId!: IVaccine; //id da vacina que será atualizada
-  vaccine: IVaccine = { name: '', date: '' }; // nova vacina ou vacinna atualizada
+  vaccine: IVaccine = { name: '', date: '', status: VaccineStatus.PENDING }; // nova vacina ou vacinna atualizada
 
   selectedPets!: IPet[] | null;
   submitted: boolean = false;
@@ -73,7 +73,7 @@ export class PetDetailsComponent implements OnInit {
     { name: 'Pendente', code: VaccineStatus.PENDING },
     { name: 'Aplicada', code: VaccineStatus.APPLIED },
     { name: 'Expirada', code: VaccineStatus.EXPIRED },
-    { name: 'Perdida', code: VaccineStatus.EXPIRED },
+    { name: 'Perdida', code: VaccineStatus.MISSED },
   ];
 
   statusSelected: IvaccineStatus | undefined;
@@ -122,7 +122,6 @@ export class PetDetailsComponent implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const id = this.route.snapshot.paramMap.get('id') as string;
     this.isEmpty = false;
-
     this.petService.addNewVaccineService(headers, id, this.vaccine).subscribe({
       next: () => {
         this.submitted = true;
