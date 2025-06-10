@@ -120,5 +120,6 @@
 
   app-message {
     position: absolute;
+    bottom: -100px;
   }
 }
